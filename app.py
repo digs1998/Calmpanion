@@ -17,10 +17,10 @@ def display_chat_history():
             st.markdown(message["content"])
 
 def main():
-    st.set_page_config(page_title="AI Chatbot", page_icon="🤖", layout="wide")
+    st.set_page_config(page_title="TranquiliChat", page_icon="🤖", layout="wide")
     initialize_session_state()
     
-    st.title("🤖 AI Chatbot")
+    st.title("🤖 TranquiliChat")
     st.sidebar.title("Settings")
     
     # Initialize handlers
