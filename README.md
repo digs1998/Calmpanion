@@ -17,7 +17,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 - A Replit account
 - API keys for:
   - Google Gemini (for Gemini Pro)
-  - Hugging Face (for Llama 3.3 access)
+  - Hugging Face (for Llama 3.3 access) (Work in progress!)
 
 ## Setup Instructions
 
