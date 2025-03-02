@@ -19,29 +19,33 @@ def display_chat_history():
 def main():
     st.set_page_config(page_title="TranquiliChat", page_icon="🤖", layout="wide")
     initialize_session_state()
-    
+
     st.title("🤖 TranquiliChat")
     st.sidebar.title("Settings")
-    
+
     # Initialize handlers
     audio_handler = AudioHandler()
     model_handler = ModelHandler()
     prompt_templates = PromptTemplates()
-    
+    system_prompt = prompt_templates.get_templates()
+
     # Input method selection
     input_method = st.sidebar.radio(
         "Choose Input Method",
         ["Text", "Speech"],
         key="input_method"
     )
-    
+
     # Model selection based on input type
-    recommended_models = model_handler.get_recommended_models(input_method.lower())
-    selected_model = st.sidebar.selectbox(
-        "Choose Model",
-        recommended_models,
-        key="model"
-    )
+    if input_method == "Speech":
+        selected_model = "Whisper"  # Automatically choose Whisper for Speech
+    else:
+        recommended_models = model_handler.get_recommended_models(input_method.lower())
+        selected_model = st.sidebar.selectbox(
+            "Choose Model",
+            recommended_models,
+            key="model"
+        )
     
     # Prompt engineering section
     st.sidebar.subheader("Prompt Engineering")
@@ -49,12 +53,6 @@ def main():
         "Select Prompt Template",
         list(prompt_templates.get_templates().keys()),
         key="template"
-    )
-    
-    system_prompt = st.sidebar.text_area(
-        "Customize System Prompt",
-        value=prompt_templates.get_templates()[selected_template],
-        key="system_prompt"
     )
     
     # Display prompt tips
@@ -69,7 +67,6 @@ def main():
     if input_method == "Text":
         user_input = st.chat_input("Type your message here...")
         if user_input:
-            # Add user message to chat
             st.session_state.messages.append({"role": "user", "content": user_input})
             with st.chat_message("user"):
                 st.markdown(user_input)
@@ -93,7 +90,7 @@ def main():
                     # Add user message to chat
                     st.session_state.messages.append({"role": "user", "content": audio_text})
                     with st.chat_message("user"):
-                        st.markdown(f"🎤 {audio_text}")
+                        st.markdown(f"🎤 Recording Complete! ✅")
                     
                     # Generate and display response
                     with st.chat_message("assistant"):

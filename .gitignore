@@ -1,2 +1,3 @@
 repl_nix_workspace.egg-info/
 utils/__pycache__/
+app.egg-info
