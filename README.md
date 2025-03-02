@@ -7,27 +7,28 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 
 - Text-based chat interface
 - Speech-to-text input capability
-- Multiple AI model support (Gemini Pro and Llama 3.3-70B-Instruct)
+- Multimodal AI model support (Gemini Pro and Llama 3.3-70B-Instruct, OpenAI whisper (for voice support))
 - Customizable prompt templates
 - System prompt customization options
 - Responsive UI built with Streamlit
 
 ## Prerequisites
 
-- A Replit account
+- A Github, and Streamlit Account
 - API keys for:
   - Google Gemini (for Gemini Pro)
   - Hugging Face (for Llama 3.3 access) (Work in progress!)
+  - OpenAI API key
 
 ## Setup Instructions
 
-1. **Fork this Repl** to your Replit account
+1. **Fork this Repl** to your Github account
 
 2. **Set up API Keys in Secrets**:
    - Click on the "Secrets" tool in the left sidebar (lock icon)
    - Add the following secrets:
      - `GOOGLE_API_KEY` - Your Google Gemini API key
-     - `HUGGINGFACE_API_KEY` - Your Hugging Face API key for accessing Llama 3.3
+     - `HF_ACCESS_TOKEN` - Your Hugging Face API key for accessing Llama 3.3
 
 3. **Run the Application**:
    - Click the "Run" button at the top of the screen
@@ -50,19 +51,21 @@ An interactive AI chatbot application powered by multiple language models (Gemin
    - For text input: Type your message in the input field at the bottom and press Enter
    - For speech input: Click the "Start Recording" button and speak your query
 
-## Running Locally (outside of Replit)
+## Running Locally (outside of Github)
 
 If you want to run this project locally:
 
 1. Clone the repository
 2. Install dependencies:
    ```
-   pip install -r requirements.txt
+   cd TranquiliChat/
+   pip install -e .
    ```
    or
    ```
    pip install google-generativeai langchain langchain-community huggingface-hub speechrecognition streamlit
    ```
+   
 3. Set environment variables for your API keys
 4. Run the Streamlit app:
    ```
