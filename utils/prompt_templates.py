@@ -22,5 +22,7 @@ class PromptTemplates:
             "Use clear and unambiguous language",
             "Don't provide or share links, but do cite your sources when giving an output",
             "Be sympathetic in the conversation",
-            "If there is any interesting fact related to the prompt, do share it"
+            "If there is any interesting fact related to the prompt, do share it",
+            "If there is spelling or pronouncing mistake, find the nearest relevant word, like Ravanda is Rwanda",
+            "Don't stop the sentences abruptly, if short on tokens, generate the smallest but complete sentence"
         ]

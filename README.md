@@ -16,8 +16,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 
 - A Github, and Streamlit Account
 - API keys for:
-  - Google Gemini (for Gemini Pro)
-  - Hugging Face (for Llama 3.3 access) (Work in progress!)
+  - Hugging Face 
   - OpenAI API key
 
 ## Setup Instructions
@@ -27,8 +26,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 2. **Set up API Keys in Secrets**:
    - Click on the "Secrets" tool in the left sidebar (lock icon)
    - Add the following secrets:
-     - `GOOGLE_API_KEY` - Your Google Gemini API key
-     - `HF_ACCESS_TOKEN` - Your Hugging Face API key for accessing Llama 3.3
+     - `HF_ACCESS_TOKEN` - Your Hugging Face API key for accessing Mistral models
 
 3. **Run the Application**:
    - Click the "Run" button at the top of the screen
@@ -41,7 +39,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
    - For speech input, allow microphone access when prompted
 
 2. **Choose an AI Model**:
-   - Select "Gemini" or "Llama 3.3" from the dropdown (Speech input only supports Gemini)
+   - Currently only Mistral models are supported, but we are actively working on adding more models soon.
 
 3. **Customize Prompts**:
    - Choose from predefined prompt templates in the sidebar
@@ -59,19 +57,21 @@ If you want to run this project locally:
 2. Install dependencies:
 
    ```
-   conda create -n <venv> python=3.11 -y
+   conda create -n <my_env> python=3.11 -y
+   conda activate <my_env>
    ```
+   Once an environment is setup, run
    ```
-   cd TranquiliChat/
-   pip install -e .
+   pip install -r requirements.txt
    ```
-   or
+3. To instantiate HuggingFace environment, go to huggingface website, and create an access token. Once you have an access token, run in command line
+
    ```
-   pip install google-generativeai langchain langchain-community huggingface-hub speechrecognition streamlit openai-whisper
+   export HUGGINGFACE_API_TOKEN = "your-huggingface-api-key
    ```
    
-4. Set environment variables for your API keys
-5. Run the Streamlit app:
+3. Set environment variables for your API keys
+4. Run the Streamlit app:
    ```
    streamlit run app.py
    ```
