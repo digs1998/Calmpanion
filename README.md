@@ -57,6 +57,10 @@ If you want to run this project locally:
 
 1. Clone the repository
 2. Install dependencies:
+
+   ```
+   conda create -n <venv> python=3.11 -y
+   ```
    ```
    cd TranquiliChat/
    pip install -e .
@@ -66,8 +70,8 @@ If you want to run this project locally:
    pip install google-generativeai langchain langchain-community huggingface-hub speechrecognition streamlit openai-whisper
    ```
    
-3. Set environment variables for your API keys
-4. Run the Streamlit app:
+4. Set environment variables for your API keys
+5. Run the Streamlit app:
    ```
    streamlit run app.py
    ```
