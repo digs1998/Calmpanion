@@ -21,14 +21,9 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 
 ## Setup Instructions
 
-1. **Fork this Repl** to your Github account
+1. **Fork this Github** to your Github account
 
-2. **Set up API Keys in Secrets**:
-   - Click on the "Secrets" tool in the left sidebar (lock icon)
-   - Add the following secrets:
-     - `HF_ACCESS_TOKEN` - Your Hugging Face API key for accessing Mistral models
-
-3. **Run the Application**:
+2. **Run the Application**:
    - Click the "Run" button at the top of the screen
    - The Streamlit application will start automatically and be available in the webview
 
@@ -67,11 +62,11 @@ If you want to run this project locally:
 3. To instantiate HuggingFace environment, go to huggingface website, and create an access token. Once you have an access token, run in command line
 
    ```
-   export HUGGINGFACE_API_TOKEN = "your-huggingface-api-key
+   export HUGGINGFACE_API_TOKEN = "your-huggingface-api-key"
    ```
    
-3. Set environment variables for your API keys
-4. Run the Streamlit app:
+4. Set environment variables for your API keys
+5. Run the Streamlit app:
    ```
    streamlit run app.py
    ```
