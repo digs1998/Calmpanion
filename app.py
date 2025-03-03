@@ -27,7 +27,7 @@ def main():
     audio_handler = AudioHandler()
     model_handler = ModelHandler()
     prompt_templates = PromptTemplates()
-    system_prompt = prompt_templates.get_templates()
+    system_prompt = prompt_templates.get_prompt_tips()
 
     # Input method selection
     input_method = st.sidebar.radio(
@@ -38,7 +38,7 @@ def main():
 
     # Model selection based on input type
     if input_method == "Speech":
-        selected_model = "Whisper"  # Automatically choose Whisper for Speech
+        selected_model = "Mistral"  # Automatically choose Whisper for Speech
     else:
         recommended_models = model_handler.get_recommended_models(input_method.lower())
         selected_model = st.sidebar.selectbox(
@@ -55,10 +55,10 @@ def main():
         key="template"
     )
     
-    # Display prompt tips
-    with st.sidebar.expander("Prompt Engineering Tips"):
-        for tip in prompt_templates.get_prompt_tips():
-            st.write(f"• {tip}")
+    # # Display prompt tips
+    # with st.sidebar.expander("Prompt Engineering Tips"):
+    #     for tip in prompt_templates.get_prompt_tips():
+    #         st.write(f"• {tip}")
     
     # Display chat history
     display_chat_history()
@@ -82,26 +82,31 @@ def main():
                     st.session_state.messages.append({"role": "assistant", "content": response})
                     st.markdown(response)
     
-    else:  # Speech input
+   # Speech input handling
+    else:
         if st.button("🎤 Start Recording"):
             with st.spinner("Recording..."):
-                audio_text = audio_handler.record_audio()
-                if audio_text:
-                    # Add user message to chat
-                    st.session_state.messages.append({"role": "user", "content": audio_text})
-                    with st.chat_message("user"):
-                        st.markdown(f"🎤 Recording Complete! ✅")
+                audio_path = audio_handler.record_audio()  # Save the recorded file
+
+                if audio_path:
+                    # Transcribe the recorded audio using Whisper
+                    transcribed_text = audio_handler.transcribe(audio_path)  # Ensure this returns text
                     
-                    # Generate and display response
-                    with st.chat_message("assistant"):
-                        with st.spinner("Thinking..."):
-                            response = model_handler.generate_response(
-                                selected_model,
-                                audio_text,
-                                system_prompt
-                            )
-                            st.session_state.messages.append({"role": "assistant", "content": response})
-                            st.markdown(response)
+                    if transcribed_text:
+                        st.session_state.messages.append({"role": "user", "content": transcribed_text})
+                        with st.chat_message("user"):
+                            st.markdown(f"🎤 {transcribed_text}")
+
+                        # Generate response using Mistral
+                        with st.chat_message("assistant"):
+                            with st.spinner("Thinking..."):
+                                response = model_handler.generate_response(
+                                    selected_model,  # Default to Mistral for text-based response
+                                    transcribed_text,
+                                    system_prompt
+                                )
+                                st.session_state.messages.append({"role": "assistant", "content": response})
+                                st.markdown(response)
 
 if __name__ == "__main__":
     main()
