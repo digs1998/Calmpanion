@@ -63,7 +63,7 @@ If you want to run this project locally:
    ```
    or
    ```
-   pip install google-generativeai langchain langchain-community huggingface-hub speechrecognition streamlit
+   pip install google-generativeai langchain langchain-community huggingface-hub speechrecognition streamlit openai-whisper
    ```
    
 3. Set environment variables for your API keys
