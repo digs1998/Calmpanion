@@ -9,7 +9,7 @@ version = "0.1.0"
 description = "AI Chatbot with Streamlit"
 requires-python = ">=3.11"
 authors = [
-    {name = "Digvijay Yadav"}
+    {name = "Digvijay Yadav"},
     {name = "Manohar Mata"}
 ]
 readme = "README.md"
