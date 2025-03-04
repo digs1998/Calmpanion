@@ -21,9 +21,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 
 ## Setup Instructions
 
-1. **Fork this Github** to your Github account
-
-2. **Run the Application**:
+1. **Run the Application**:
    - Click the "Run" button at the top of the screen
    - The Streamlit application will start automatically and be available in the webview
 
