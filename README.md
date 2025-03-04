@@ -58,6 +58,7 @@ If you want to run this project locally:
    Once an environment is setup, run
    ```
    pip install -r requirements.txt
+   pip install scipy
    ```
 3. To instantiate HuggingFace environment, go to huggingface website, and create an access token. Once you have an access token, run in command line
 
