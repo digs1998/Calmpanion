@@ -1,7 +1,7 @@
 
 # TranquiliChat
 
-An interactive AI chatbot application powered by multiple language models (Gemini and Llama 3.3) with support for both text and speech input. Work in progress for speech support, stay tuned!!
+An interactive AI chatbot application powered by multiple language models with support for both text and speech input. Work in progress for speech support, stay tuned!!
 
 ## Features
 
