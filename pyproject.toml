@@ -1,0 +1,173 @@
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "TranquiliChat"
+version = "0.1.0"
+description = "AI Chatbot with Streamlit"
+requires-python = ">=3.11"
+authors = [
+    {name = "Digvijay Yadav"}
+    {name = "Manohar Mata"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "aiohappyeyeballs",
+    "aiohttp",
+    "aiosignal",
+    "altair",
+    "annotated-types",
+    "anyio",
+    "async-timeout",
+    "attrs",
+    "blinker",
+    "cachetools",
+    "certifi",
+    "cffi",
+    "charset-normalizer",
+    "click",
+    "contourpy",
+    "cycler",
+    "dataclasses-json",
+    "diskcache",
+    "distro",
+    "exceptiongroup",
+    "filelock",
+    "fonttools",
+    "frozenlist",
+    "fsspec",
+    "gitdb",
+    "GitPython",
+    "google-ai-generativelanguage",
+    "google-api-core",
+    "google-auth",
+    "google-generativeai",
+    "googleapis-common-protos",
+    "greenlet",
+    "grpcio",
+    "grpcio-status",
+    "h11",
+    "httpcore",
+    "httpx",
+    "huggingface-hub",
+    "idna",
+    "imagecodecs",
+    "imageio",
+    "importlib-resources",
+    "importlib_metadata",
+    "Jinja2",
+    "jiter",
+    "joblib",
+    "jsonpatch",
+    "jsonpointer",
+    "jsonschema",
+    "jsonschema-specifications",
+    "kiwisolver",
+    "langchain",
+    "langchain-community",
+    "langchain-core",
+    "langchain-text-splitters",
+    "langsmith",
+    "lazy_loader",
+    "llama_cpp_python",
+    "llvmlite",
+    "markdown-it-py",
+    "MarkupSafe",
+    "marshmallow",
+    "matplotlib",
+    "mdurl",
+    "more-itertools",
+    "mpmath",
+    "multidict",
+    "mypy-extensions",
+    "narwhals",
+    "networkx",
+    "numba",
+    "numpy",
+    "openai",
+    "openai-whisper",
+    "openslide-python",
+    "orjson",
+    "packaging",
+    "pandas",
+    "Pillow",
+    "pkgutil_resolve_name",
+    "propcache",
+    "proto-plus",
+    "protobuf",
+    "py4j",
+    "pyarrow",
+    "pyasn1",
+    "pyasn1_modules",
+    "pycparser",
+    "pydantic",
+    "pydantic_core",
+    "pydeck",
+    "Pygments",
+    "pyparsing",
+    "pyspark",
+    "python-dateutil",
+    "pytz",
+    "PyWavelets",
+    "PyYAML",
+    "referencing",
+    "regex",
+    "requests",
+    "requests-toolbelt",
+    "rich",
+    "rpds-py",
+    "rsa",
+    "scikit-image",
+    "scikit-learn",
+    "six",
+    "smmap",
+    "sniffio",
+    "sounddevice",
+    "SpeechRecognition",
+    "SQLAlchemy",
+    "streamlit",
+    "sympy",
+    "tenacity",
+    "threadpoolctl",
+    "tifffile",
+    "tiktoken",
+    "toml",
+    "torch",
+    "torchaudio",
+    "torchvision",
+    "tornado",
+    "tqdm",
+    "typing-inspect",
+    "typing_extensions",
+    "tzdata",
+    "urllib3",
+    "Wave",
+    "yarl",
+    "zipp",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.1.0",
+    "flake8>=4.0.1",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/digs1998/TranquiliChat/"
+"Bug Tracker" = "https://github.com/digs1998/TranquiliChat/Issues"
+
+[tool.setuptools]
+packages = ["utils"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
