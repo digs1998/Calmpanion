@@ -7,7 +7,7 @@ An interactive AI chatbot application powered by multiple language models (Gemin
 
 - Text-based chat interface
 - Speech-to-text input capability
-- Multimodal AI model support (Gemini Pro and Llama 3.3-70B-Instruct, OpenAI whisper (for voice support))
+- Multimodal AI model support (Mistral AI, OpenAI whisper (for voice support))
 - Customizable prompt templates
 - System prompt customization options
 - Responsive UI built with Streamlit
