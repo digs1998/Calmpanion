@@ -1,56 +1,103 @@
-import os
-from typing import Dict, List
-import google.generativeai as genai
+import gradio as gr
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from langchain.llms import HuggingFaceEndpoint
-import streamlit as st
+from langchain.embeddings import HuggingFaceBgeEmbeddings
+from langchain_groq import ChatGroq
+import os
+from langchain_core.runnables import Runnable
+from typing import List, Union
 
 class ModelHandler:
     def __init__(self):
-        self.setup_models()
+        self.mistral_api = None
         
-    def setup_models(self):
-        """Initialize AI models"""
-        
-        # Setup Mistral via Hugging Face
-        self.mistral = HuggingFaceEndpoint(
-            endpoint_url="https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
-            huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_TOKEN", "your-huggingface-api-key"),
-            task="text-generation",
-            max_new_tokens=100,
-            temperature=0.6
+    def initialize_mistral(self):
+        """Initialize Mistral model via HuggingFace API"""
+        # mistral_api = HuggingFaceEndpoint(
+        #     endpoint_url="https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
+        #     huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_TOKEN", "your_api_key"),
+        #     task="text-generation",
+        #     max_new_tokens=300,
+        #     temperature=0.6
+        # )
+        # return mistral_api
+        mistral_api = ChatGroq(
+            model="mixtral-8x7b-32768",
+            groq_api_key=os.getenv("GROQ_API_KEY", "your_groq_api_key"),
+            temperature=0.0,
+            max_retries=2
         )
+        return mistral_api
         
-        ## llama 3.3 needs pro subscription, and llama 3.1 is too large to load, so keeping Mistral for now
+    def initialize_llama(self):
+        llm = ChatGroq(
+            model="llama3-70b-8192",
+            groq_api_key=os.getenv("GROQ_API_KEY", "your_groq_api_key"),
+            temperature=0.0,
+            max_retries=2
+        )
+        return llm
+    
+    # def generate_response(self, model: str, prompt: str, system_prompt: str, context: Union[str, None] = None) -> List[str]:
+    #     try:
+    #         # Build the full prompt, including context only if it's relevant
+    #         full_prompt = f"{system_prompt}\n{prompt}" if system_prompt else prompt
+    #         if context:
+    #             full_prompt = f"{context}\n\n{full_prompt}"  # Append context only if provided
+            
+    #         # 🔹 **Mistral Model Handling**
+    #         if model == "Mistral":
+    #             mistral_api = self.initialize_mistral()
+    #             response = mistral_api.invoke(full_prompt)
+    #             return response
+            
+    #         # 🔹 **Llama Model Handling**
+    #         elif model == "Llama":
+    #             llm = self.initialize_llama()
+    #             full_prompt = f"<|begin_of_text|><|system|>\n{system_prompt}<|user|>\n{prompt}<|assistant|>\n"
+    #             if context:
+    #                 full_prompt = f"<|context|>\n{context}\n" + full_prompt  # Include context if applicable
+    #             response = llm.invoke(full_prompt)
+    #             return response
+            
+    #         else:
+    #             raise ValueError("Unsupported model type. Please choose 'Mistral' or 'Llama'.")
 
-    def get_recommended_models(self, input_type: str) -> List[str]:
+    #     except Exception as e:
+    #         return [f"⚠ Error generating response: {str(e)}"]
+    
+    def generate_response(self, model: str, prompt: str, system_prompt: str, context: Union[str, None] = None) -> str:
+        try:
+            full_prompt = f"{system_prompt}\n{prompt}" if system_prompt else prompt
+            if context:
+                full_prompt = f"{context}\n\n{full_prompt}"  # Append context if applicable
+
+            if model == "Mistral":
+                mistral_api = self.initialize_mistral()
+                response = mistral_api.invoke(full_prompt)
+                
+                if isinstance(response, dict):
+                    return response.get("content")
+                return str(response)
+
+            elif model == "Llama":
+                llm = self.initialize_llama()
+                response = llm.invoke(full_prompt)
+                if isinstance(response, dict):
+                    return response.get("content")
+                return str(response)
+
+            else:
+                raise ValueError("Unsupported model type. Please choose 'Mistral' or 'Llama'.")
+            
+
+        except Exception as e:
+            return f"⚠ Error generating response: {str(e)}"
+        
+        
+def get_recommended_models(self, input_type: str) -> List[str]:
         """Get recommended models based on input type"""
         # if input_type == "text":
         #     return ["Mistral", "Llama 3.1"]
         # else:  # speech
-        return ["Mistral"] 
-            
-    def generate_response(self, model: str, prompt: str, system_prompt: str = "") -> str:
-        """Generate response from selected model"""
-        try:
-            if model == "Mistral":
-                full_prompt = f"{system_prompt}\n{prompt}" if system_prompt else prompt
-                response = self.mistral(full_prompt)
-
-            # elif model == "Llama 3.1":
-            #     full_prompt = f"<|begin_of_text|><|system|>\n{system_prompt}<|user|>\n{prompt}<|assistant|>\n"
-            #     return self.llama(full_prompt)
-
-            else:
-                raise ValueError(f"Unknown model: {model}")
-
-            if isinstance(response, dict):  
-                response_text = response.get("text") or response.get("response") or next(iter(response.values()), "")
-            else:
-                response_text = str(response)
-
-            return response_text.strip()
-
-        except Exception as e:
-            st.error(f"Error generating response: {str(e)}")
-            return "I encountered an error while processing your request."
-
+        return ["Mistral", "Llama"] 
