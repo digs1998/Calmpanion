@@ -17,6 +17,7 @@ def display_chat_history():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+
 def main():
     st.set_page_config(page_title="TranquiliChat", page_icon="🤖", layout="wide")
     initialize_session_state()
@@ -47,24 +48,25 @@ def main():
         list(prompt_templates.get_templates().keys()),
         key="template"
     )
-    
+
+    qa_chain = None  # Define outside to avoid scope issues
+    selected_model = None  # Define outside to avoid scope issues
+
     if selected_template == "Stress and Mental Wellbeing Support":
         model_type = st.sidebar.selectbox(
-        "Choose a Model for QA Chain:",
-        ("Mistral", "Llama")
-    )
-    
+            "Choose a Model for QA Chain:",
+            ("Mistral", "Llama"),
+            key="qa_model"  # Unique key
+        )
         # Initialize the chosen model in the QA chain
         qa_chain = setup_qachain(db, model_type=model_type)
-
-    # 🔹 **Model Selection**
-    selected_model = st.sidebar.selectbox("Choose Model", 
-                                          ["Mistral", "Llama"],
-                                          key="model"
-                                            )
-
-    # # Display chat history
-    # display_chat_history()
+    else:
+        # 🔹 **Model Selection (Only when NOT Stress Management)**
+        selected_model = st.sidebar.selectbox(
+            "Choose Model",
+            ["Mistral", "Llama"],
+            key="model"
+        )
 
     # 🔹 **Text Input Handling**
     if input_method == "Text":
@@ -76,54 +78,24 @@ def main():
 
             # 🔹 **Use RAG if Stress Support is Selected**
             context = None  # Default to None
-            if selected_template == "Stress and Mental Wellbeing Support":
+            if selected_template == "Stress and Mental Wellbeing Support" and qa_chain:
                 retrieved_docs = qa_chain.run(user_input)
                 context = "\n".join(retrieved_docs)  # Convert retrieved chunks to text
+                model_to_use = model_type  # Use QA model
+            else:
+                model_to_use = selected_model  # Use standard model selection
 
             # 🔹 **Generate Response**
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
                     response = model_handler.generate_response(
-                        model=selected_model,
+                        model=model_to_use,
                         prompt=user_input,
                         system_prompt=system_prompt,
                         **({"context": context} if context else {})  # Include context only if it's not None
                     )
                     st.session_state.messages.append({"role": "assistant", "content": response})
                     st.markdown(response)
-
-    # 🔹 **Speech Input Handling**
-    else:
-        if st.button("🎤 Start Recording"):
-            with st.spinner("Recording..."):
-                audio_path = audio_handler.record_audio()
-
-                if audio_path:
-                    transcribed_text = audio_handler.transcribe(audio_path)
-
-                    if transcribed_text:
-                        st.session_state.messages.append({"role": "user", "content": transcribed_text})
-                        with st.chat_message("user"):
-                            st.markdown(f"🎤 {transcribed_text}")
-
-                        # 🔹 **Use RAG if Stress Support is Selected**
-                        context = None  # Default to None
-                        if selected_template == "Stress and Mental Wellbeing Support":
-                            retrieved_docs = qa_chain.run(transcribed_text)
-                            context = "\n".join(retrieved_docs)
-
-                        # 🔹 **Generate Response**
-                        with st.chat_message("assistant"):
-                            with st.spinner("Thinking..."):
-                                response = model_handler.generate_response(
-                                    model=selected_model,
-                                    prompt=transcribed_text,
-                                    system_prompt=system_prompt,
-                                    **({"context": context} if context else {})  # Include context only if it's not None
-                                )
-                                st.session_state.messages.append({"role": "assistant", "content": response})
-                                st.markdown(response)
-
 
 if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ class PromptTemplates:
                         TranquiliChat: """
 
         return {
-            "General Conversation": "Help with general knowledge questions.",
+            "General Conversation": "Help with general knowledge questions, do not suggest anything which is not related to general conversation like talking about stress.",
             "Creative Writer": "You are a creative writer. Respond with imaginative and engaging content.",
             "Stress and Mental Wellbeing Support": base_intro + "You will be a friend and companion, offering comfort and guidance."
         }
