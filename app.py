@@ -54,8 +54,8 @@ def main():
         ("Mistral", "Llama")
     )
     
-    # Initialize the chosen model in the QA chain
-    qa_chain = setup_qachain(db, model_type=model_type)
+        # Initialize the chosen model in the QA chain
+        qa_chain = setup_qachain(db, model_type=model_type)
 
     # 🔹 **Model Selection**
     selected_model = st.sidebar.selectbox("Choose Model", 
