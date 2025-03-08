@@ -15,7 +15,7 @@ class ModelHandler:
         """Initialize Mistral model via HuggingFace API"""
         mistral_api = ChatGroq(
             model="mixtral-8x7b-32768",
-            groq_api_key=os.getenv("GROQ_API_KEY", "your_groq_api_key"),
+            groq_api_key=os.getenv("GROQ_API_KEY", "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"),
             temperature=0.0,
             max_retries=2
         )
@@ -24,7 +24,7 @@ class ModelHandler:
     def initialize_llama(self):
         llm = ChatGroq(
             model="llama3-70b-8192",
-            groq_api_key=os.getenv("GROQ_API_KEY", "your_groq_api_key"),
+            groq_api_key=os.getenv("GROQ_API_KEY", "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"),
             temperature=0.0,
             max_retries=2
         )

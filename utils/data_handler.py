@@ -17,7 +17,7 @@ def setup_database():
     if not os.path.exists(db_path):
         # Load PDF documents
         loader = DirectoryLoader(
-            "/Users/Lenovo/Desktop/Education/TranquiliChat/utils",
+            "./utils",
             glob="*.pdf",
             loader_cls=PyPDFLoader
         )

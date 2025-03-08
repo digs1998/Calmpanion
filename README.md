@@ -60,13 +60,23 @@ If you want to run this project locally:
 
    ```
    export GROQ_API_KEY = "your-huggingface-api-key"
+
    ```
-   
 4. Set environment variables for your API keys
-5. Run the Streamlit app:
+
+5. To Run the Landing page 
+   ```
+   python -m http.server 8000
+   
+   ```
+6. Open a new terminal to run Streamlit
+
+7. Run the Streamlit app:
    ```
    streamlit run app.py
+   
    ```
+Both terminal has to be run parallel.
 
 ## Project Structure
 
