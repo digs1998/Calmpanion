@@ -46,6 +46,12 @@ An interactive AI Mental Health support chatbot application powered by multiple 
 If you want to run this project locally:
 
 1. Clone the repository
+  ```
+  cd TranquiliChat
+
+  ```
+
+
 2. Install dependencies:
 
    ```
@@ -70,6 +76,12 @@ If you want to run this project locally:
    
    ```
 6. Open a new terminal to run Streamlit
+   ```
+   cd TranquiliChat
+   conda acitivate <my_env>
+
+   ```
+
 
 7. Run the Streamlit app:
    ```
