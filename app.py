@@ -67,35 +67,50 @@ def main():
             ["Mistral", "Llama"],
             key="model"
         )
-
+    user_input = None
     # 🔹 **Text Input Handling**
     if input_method == "Text":
         user_input = st.chat_input("Type your message here...")
-        if user_input:
-            st.session_state.messages.append({"role": "user", "content": user_input})
-            with st.chat_message("user"):
-                st.markdown(user_input)
+    
+    # 🔹 **Speech Input Handling**
+    elif input_method == "Speech":
+        st.subheader("🎤 Speak Now")
+        audio_bytes = st.file_uploader("Upload a recorded audio file", type=["wav", "mp3", "ogg"])
 
-            # 🔹 **Use RAG if Stress Support is Selected**
-            context = None  # Default to None
-            if selected_template == "Stress and Mental Wellbeing Support" and qa_chain:
-                retrieved_docs = qa_chain.run(user_input)
-                context = "\n".join(retrieved_docs)  # Convert retrieved chunks to text
-                model_to_use = model_type  # Use QA model
-            else:
-                model_to_use = selected_model  # Use standard model selection
+        if st.button("Record"):
+            audio_bytes = audio_handler.record_audio()
+        
+        if audio_bytes:
+            with st.spinner("Processing Speech..."):
+                user_input = audio_handler.transcribe(audio_bytes)
+                st.write(f"🗣 You said: {user_input}")
 
-            # 🔹 **Generate Response**
-            with st.chat_message("assistant"):
-                with st.spinner("Thinking..."):
-                    response = model_handler.generate_response(
-                        model=model_to_use,
-                        prompt=user_input,
-                        system_prompt=system_prompt,
-                        **({"context": context} if context else {})  # Include context only if it's not None
-                    )
-                    st.session_state.messages.append({"role": "assistant", "content": response})
-                    st.markdown(response)
+    # Process user input (from text or speech)
+    if user_input:
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
+            st.markdown(user_input)
+
+        # 🔹 **Use RAG if Stress Support is Selected**
+        context = None  # Default to None
+        if selected_template == "Stress and Mental Wellbeing Support" and qa_chain:
+            retrieved_docs = qa_chain.run(user_input)
+            context = "\n".join(retrieved_docs)  # Convert retrieved chunks to text
+            model_to_use = model_type  # Use QA model
+        else:
+            model_to_use = selected_model  # Use standard model selection
+
+        # 🔹 **Generate Response**
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = model_handler.generate_response(
+                    model=model_to_use,
+                    prompt=user_input,
+                    system_prompt=system_prompt,
+                    **({"context": context} if context else {})  # Include context only if it's not None
+                )
+                st.session_state.messages.append({"role": "assistant", "content": response})
+                st.markdown(response)
 
 if __name__ == "__main__":
     main()
