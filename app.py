@@ -126,7 +126,7 @@ def authenticate(username: str, password: str) -> bool:
 
 
 def main():
-    st.set_page_config(page_title="Calmspace", page_icon="😌", layout="wide")
+    st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
     initialize_session_state()
     
     # Initialize session state for tracking the current view
@@ -184,7 +184,7 @@ def main():
         col1, col2 = st.columns([3, 1])
 
         with col1:
-            st.write(f"Welcome, {st.session_state['username']}! 👋")
+            st.write(f"Welcome, to Calmpanion! 👋")
 
         with col2:
             if st.button("Logout"):
