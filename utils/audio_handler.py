@@ -1,6 +1,6 @@
 import whisper
-import sounddevice as sd
 import torch
+import sounddevice as sd
 import numpy as np
 import tempfile
 import streamlit as st
@@ -37,7 +37,7 @@ class AudioHandler:
             audio_file = self.record_audio()  # Record new audio if no file is provided
 
         try:
-            result = self.model.transcribe(audio_file, fp16=torch.cuda.is_available())  # Use fp16 if GPU is available
+            result = self.model.transcribe(audio_file)  # Use fp16 if GPU is available
             return result["text"]
         except Exception as e:
             return f"Error transcribing audio: {str(e)}"
