@@ -126,7 +126,7 @@ def authenticate(username: str, password: str) -> bool:
 
 
 def main():
-    st.set_page_config(page_title="Calmspace", page_icon="😌", layout="wide")
+    st.set_page_config(page_title="TranquiliChat", page_icon="😌", layout="wide")
     initialize_session_state()
     
     # Initialize session state for tracking the current view
