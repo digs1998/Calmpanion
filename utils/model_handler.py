@@ -6,6 +6,9 @@ from langchain_groq import ChatGroq
 import os
 from langchain_core.runnables import Runnable
 from typing import List, Union
+from dotenv import load_dotenv
+
+load_dotenv("/Users/Lenovo/Desktop/Education/TranquiliChat/.env")
 
 class ModelHandler:
     def __init__(self):
@@ -15,7 +18,7 @@ class ModelHandler:
         """Initialize Mistral model via HuggingFace API"""
         mistral_api = ChatGroq(
             model="mixtral-8x7b-32768",
-            groq_api_key=os.getenv("GROQ_API_KEY", "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"),
+            groq_api_key=os.getenv("GROQ_API_KEY"),
             temperature=0.0,
             max_retries=2
         )
@@ -24,7 +27,7 @@ class ModelHandler:
     def initialize_llama(self):
         llm = ChatGroq(
             model="llama3-70b-8192",
-            groq_api_key=os.getenv("GROQ_API_KEY", "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"),
+            groq_api_key=os.getenv("GROQ_API_KEY"),
             temperature=0.0,
             max_retries=2
         )
