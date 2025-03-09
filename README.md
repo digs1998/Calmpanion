@@ -1,5 +1,5 @@
 
-# TranquiliChat
+# Calmpanion
 
 An interactive AI Mental Health support chatbot application powered by multiple language models with support for both text and speech input.
 
@@ -47,10 +47,9 @@ If you want to run this project locally:
 
 1. Clone the repository
   ```
-  cd TranquiliChat
+  cd Calmpanion
 
   ```
-
 
 2. Install dependencies:
 
@@ -65,7 +64,7 @@ If you want to run this project locally:
 3. To instantiate Groq environment, go to Groq website, and create an API key. Once you have an access token, run in command line
 
    ```
-   export GROQ_API_KEY = "your-huggingface-api-key"
+   export GROQ_API_KEY = "your-groq-api-key"
 
    ```
 4. Set environment variables for your API keys
@@ -77,7 +76,7 @@ If you want to run this project locally:
    ```
 6. Open a new terminal to run Streamlit
    ```
-   cd TranquiliChat
+   cd Calmpanion
    conda acitivate <my_env>
 
    ```
