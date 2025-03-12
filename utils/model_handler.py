@@ -5,7 +5,7 @@ import os
 from typing import List, Union
 from dotenv import load_dotenv
 
-load_dotenv("/Users/Lenovo/Desktop/Education/TranquiliChat/.env")
+load_dotenv()
 
 class ModelHandler:
     def __init__(self):

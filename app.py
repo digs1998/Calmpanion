@@ -233,20 +233,22 @@ def main():
         selected_model = None  # Define outside to avoid scope issues
 
         if selected_template == "Stress and Mental Wellbeing Support":
-            model_type = st.sidebar.selectbox(
-                "Choose a Model for QA Chain:",
-                ("Mistral", "Llama"),
-                key="qa_model"  # Unique key
-            )
+            # model_type = st.sidebar.selectbox(
+            #     "Choose a Model for QA Chain:",
+            #     ("Mistral", "Llama"),
+            #     key="qa_model"  # Unique key
+            # )
+            model_type = "Llama"
             # Initialize the chosen model in the QA chain
             qa_chain = setup_qachain(db, model_type=model_type)
         else:
             # 🔹 **Model Selection (Only when NOT Stress Management)**
-            selected_model = st.sidebar.selectbox(
-                "Choose Model",
-                ["Mistral", "Llama"],
-                key="model"
-            )
+            # selected_model = st.sidebar.selectbox(
+            #     "Choose Model",
+            #     ["Mistral", "Llama"],
+            #     key="model"
+            # )
+            selected_model = "Mistral"
         user_input = None
         # 🔹 **Text Input Handling**
         if input_method == "Text":
