@@ -8,6 +8,11 @@ import os
 import json
 import hashlib
 
+import streamlit as st
+import os
+
+
+
 
 s3_client = boto3.client('s3', 
                             aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), 
@@ -126,6 +131,15 @@ def authenticate(username: str, password: str) -> bool:
 
 
 def main():
+    # Define the path to the HTML file
+    html_file_path = "index.html"
+
+    # Read the HTML content from the file
+    with open(html_file_path, "r") as file:
+        html_content = file.read()
+
+    # Display the HTML content in the Streamlit app
+    st.components.v1.html(html_content, width=700, height=600)
     st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
     initialize_session_state()
     

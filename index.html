@@ -93,27 +93,40 @@
       color: var(--text-light);
       margin-bottom: 2.5rem;
     }
-    
-    .btn {
-      display: inline-block;
+    .hero-cta {
+    display: flex;
+    justify-content: center;  /* Centers buttons horizontally */
+    align-items: center;      /* Aligns buttons vertically */
+    gap: 1rem;                /* Ensures equal spacing */
+    margin-top: 1.5rem;        /* Adds space above buttons */
+}
+
+  .btn {
+      display: flex;
+      justify-content: center;   /* Centers text inside button */
+      align-items: center;       /* Centers vertically */
       padding: 0.8rem 2rem;
       border-radius: 30px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.3s ease;
       cursor: pointer;
-    }
-    
-    .btn-primary {
+      font-size: 1rem;
+      min-width: 150px;          /* Ensures both buttons have the same width */
+      text-align: center;
+  }
+
+  /* Primary Button */
+  .btn-primary {
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
       color: white;
       border: none;
       box-shadow: 0 5px 15px rgba(93, 169, 233, 0.4);
       position: relative;
       overflow: hidden;
-    }
-    
-    .btn-primary::after {
+  }
+
+  .btn-primary::after {
       content: '';
       position: absolute;
       top: -50%;
@@ -123,28 +136,30 @@
       background: rgba(255, 255, 255, 0.1);
       transform: rotate(30deg);
       transition: transform 0.7s ease-in-out;
-    }
-    
-    .btn-primary:hover {
+  }
+
+  .btn-primary:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 25px rgba(93, 169, 233, 0.5);
-    }
-    
-    .btn-primary:hover::after {
+  }
+
+  .btn-primary:hover::after {
       transform: rotate(30deg) translate(10%, 10%);
-    }
-    
-    .btn-secondary {
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
       background: transparent;
       color: var(--primary-blue);
       border: 2px solid var(--primary-blue);
-      margin-left: 1rem;
-    }
-    
-    .btn-secondary:hover {
+      min-width: 150px;         /* Ensures both buttons are equal width */
+      text-align: center;
+  }
+
+  .btn-secondary:hover {
       background: rgba(93, 169, 233, 0.1);
-    }
-    
+  }
+
     .hero-image {
       width: 50%;
       position: relative;
@@ -273,48 +288,53 @@
     }
     
     .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    
-    .feature-card {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    }
-    
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--light-blue), var(--light-green));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-      font-size: 1.5rem;
-      color: var(--primary-blue);
-    }
-    
-    .feature-title {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--text-dark);
-    }
-    
-    .feature-description {
-      color: var(--text-light);
-    }
-    
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  justify-content: center; /* Centering the grid items */
+  place-items: center; /* Ensures proper alignment */
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 350px; /* Restricting max-width for better centering */
+  width: 100%;
+  text-align: center; /* Center align content inside the card */
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--light-blue), var(--light-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.5rem;
+  color: var(--primary-blue);
+}
+
+.feature-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.feature-description {
+  color: var(--text-light);
+}
+
     .wave-divider {
       width: 100%;
       height: 150px;
@@ -347,19 +367,39 @@
     }
     
     .testimonial-content {
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--text-light);
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    
-    .testimonial-content::before,
-    .testimonial-content::after {
-      content: '"';
-      font-size: 2rem;
-      color: var(--light-blue);
-    }
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #222; /* Darker text for better contrast */
+    background-color: #fff; /* White background */
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;  /* Slightly increased padding for better spacing */
+    border-radius: 8px; /* Rounded corners for aesthetics */
+    position: relative;
+    line-height: 1.6; /* Improved readability */
+}
+
+.testimonial-subtext {
+    font-size: 1rem;
+    color: #222; /* Darker text for better contrast */
+    font-weight: 500; /* Medium font weight for better visibility */
+    text-align: center; /* Ensures alignment consistency */
+}
+
+.testimonial-content::before,
+.testimonial-content::after {
+    content: '"';
+    font-size: 2rem;
+    color: #004080; /* Slightly darker blue for better contrast */
+    font-weight: bold; /* Makes the quotes more prominent */
+}
+
+  .section-subtitle {
+      font-size: 1rem; 
+      color: #333; /* Darker text for better visibility */
+      font-weight: 600; /* Slightly bolder for emphasis */
+      text-align: center; /* Ensure alignment */
+  }
+
     
     .testimonial-author {
       display: flex;
@@ -495,124 +535,172 @@
       background: rgba(255, 255, 255, 0.9);
     }
     
-    footer {
-      background: var(--text-dark);
-      color: white;
-      padding: 3rem 5%;
-    }
-    
+    /* Footer Styles */
+footer {
+    background: var(--text-dark);
+    color: white;
+    padding: 3rem 5%;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1400px; /* Increased for better spacing */
+    margin: 0 auto;
+    gap: 2rem;
+}
+
+/* Footer Logo and Description */
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 400px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Social Links */
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.social-link:hover {
+    background: var(--primary-blue);
+    transform: scale(1.1);
+}
+
+/* Footer Links */
+.footer-links {
+    text-align: left;
+}
+
+.footer-links h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1400px;
+    gap: 1rem;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Ensure No Extra Spacing Issues */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
     .footer-content {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 2rem;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
     }
-    
-    .footer-logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-    }
-    
-    .footer-description {
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 300px;
-      margin-bottom: 1.5rem;
-    }
-    
-    .social-links {
-      display: flex;
-      gap: 1rem;
-    }
-    
-    .social-link {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s ease;
-    }
-    
-    .social-link:hover {
-      background: var(--primary-blue);
-    }
-    
-    .footer-links h4 {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-    }
-    
-    .footer-links ul {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    
-    .footer-links a:hover {
-      color: white;
+
+    .footer-links {
+        text-align: center;
     }
     
     .footer-bottom {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    
-    .copyright {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.9rem;
-    }
-    
-    @media (max-width: 992px) {
-      .hero {
         flex-direction: column;
         text-align: center;
-        padding: 3rem 5%;
-      }
-      
-      .hero-content {
-        width: 100%;
-        margin-bottom: 3rem;
-      }
-      
-      .hero-image {
-        width: 100%;
-      }
-      
-      .chat-preview {
-        margin: 0 auto;
-      }
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
     }
     
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-      }
-      
-      .hero-title {
-        font-size: 2.5rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
+    .footer-logo {
+        font-size: 1.5rem;
     }
+
+    .footer-description {
+        font-size: 0.9rem;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+    }
+}
+
   </style>
 </head>
 <body>
@@ -636,8 +724,8 @@
       <h1 class="hero-title">Find Peace in Every Conversation</h1>
       <p class="hero-subtitle">Calmpanion is your AI companion designed to help you manage stress, find clarity, and create moments of calm throughout your day.</p>
       <div class="hero-cta">
-        <a href="http://localhost:5000" class="btn btn-primary">Try Now</a>
-        <a href="#" class="btn btn-secondary">Learn More</a>
+        <a href="https://www.calmpanion.org/" class="btn btn-primary">Try Now</a>
+        <a href="https://www.calmpanion.org/" class="btn btn-secondary">Learn More</a>
       </div>
     </div>
     <div class="hero-image">
@@ -688,24 +776,15 @@
         <p class="feature-description">Access to breathing exercises, meditation guides, and calming techniques.</p>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h3 class="feature-title">Mood Tracking</h3>
-        <p class="feature-description">Monitor your emotional patterns and celebrate your progress over time.</p>
-      </div>
       
+
       <div class="feature-card">
         <div class="feature-icon">🛡️</div>
         <h3 class="feature-title">Private & Secure</h3>
         <p class="feature-description">Your conversations are completely private and your data is securely protected.</p>
       </div>
       
-      <div class="feature-card">
-        <div class="feature-icon">💡</div>
-        <h3 class="feature-title">Practical Advice</h3>
-        <p class="feature-description">Actionable strategies to manage stress and improve your daily wellbeing.</p>
-      </div>
-    </div>
+    
   </section>
   
   <section class="testimonials" id="testimonials">
@@ -754,52 +833,14 @@
         <div class="dot"></div>
       </div>
     </div>
-  </section>
-  
-  <section class="mood-tracker" id="tracker">
-    <div class="mood-container">
-      <h2 class="mood-title">How are you feeling today?</h2>
-      <p>Track your mood and get personalized support based on how you're feeling.</p>
-      
-      <div class="mood-options">
-        <div class="mood-option">
-          <div class="mood-emoji">😊</div>
-          <div class="mood-label">Great</div>
-        </div>
-        
-        <div class="mood-option">
-          <div class="mood-emoji">🙂</div>
-          <div class="mood-label">Good</div>
-        </div>
-        
-        <div class="mood-option">
-          <div class="mood-emoji">😐</div>
-          <div class="mood-label">Neutral</div>
-        </div>
-        
-        <div class="mood-option">
-          <div class="mood-emoji">😔</div>
-          <div class="mood-label">Low</div>
-        </div>
-        
-        <div class="mood-option">
-          <div class="mood-emoji">😫</div>
-          <div class="mood-label">Stressed</div>
-        </div>
-      </div>
-      
-      <a href="http://localhost:5000" class="btn btn-primary">Start Chatting</a>
-    </div>
-  </section>
-  
   <section class="cta">
     <div class="cta-card">
       <h2 class="cta-title">Begin Your Journey to Calm</h2>
       <p class="cta-subtitle">Join thousands of others who have found peace of mind with Calmpanion.</p>
-      <a href="http://localhost:5000" class="btn btn-white">Try Calmpanion Free</a>
+      <a href="https://www.calmpanion.org/" class="btn btn-white">Try Calmpanion Free</a>
     </div>
   </section>
-  
+
   <footer id="contact">
     <div class="footer-content">
       <div class="footer-info">
@@ -816,30 +857,30 @@
       <div class="footer-links">
         <h4>Company</h4>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our Team</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="pages\OurTeam.tsx">Our Team</a></li>
+          <li><a href="pages\Careers.tsx">Careers</a></li>
+          <li><a href="pages\Contact.tsx">Contact</a></li>
         </ul>
       </div>
       
       <div class="footer-links">
         <h4>Resources</h4>
         <ul>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Support</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Community</a></li>
+          <li><a href="pages\Blog.tsx">Blog</a></li>
+          <li><a href="pages\Support.tsx">Support</a></li>
+          <li><a href="pages\FAQ.tsx">FAQ</a></li>
+          <li><a href="pages\Community.tsx">Community</a></li>
         </ul>
       </div>
       
       <div class="footer-links">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Cookie Policy</a></li>
-          <li><a href="#">Data Protection</a></li>
+          <li><a href="pages\PrivacyPolicy.tsx">Privacy Policy</a></li>
+          <li><a href="pages\TermsOfService.tsx">Terms of Service</a></li>
+          <li><a href="pages\CookiePolicy.tsx">Cookie Policy</a></li>
+          <li><a href="pages\DataProtection.tsx">Data Protection</a></li>
         </ul>
       </div>
     </div>
@@ -851,7 +892,8 @@
         <a href="#" style="color: rgba(255, 255, 255, 0.7); text-decoration: none;">Accessibility</a>
       </div>
     </div>
-  </footer>
+  </footer> 
+
   
   <script>
     // Simple testimonial slider functionality
