@@ -17,7 +17,10 @@ class PromptTemplates:
                         {context}
 
                         User: {question}
-                        Calmpanion: """
+                        Calmpanion: 
+                        
+                        Be conversational, if a user shares details, learn from the context and help, instead of just asking questions.
+                        """
 
         return {
             "Stress and Mental Wellbeing Support": base_intro + "You will be a friend and companion, offering comfort and guidance.",

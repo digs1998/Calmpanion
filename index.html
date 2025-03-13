@@ -724,7 +724,7 @@ html, body {
       <h1 class="hero-title">Find Peace in Every Conversation</h1>
       <p class="hero-subtitle">Calmpanion is your AI companion designed to help you manage stress, find clarity, and create moments of calm throughout your day.</p>
       <div class="hero-cta">
-        <a href="http://localhost.com:5000" class="btn btn-primary">Try Now</a>
+        <a href="#" class="btn btn-white" onclick="launchStreamlit()">Try Now</a>
       </div>
     </div>
     <div class="hero-image">
@@ -836,7 +836,7 @@ html, body {
     <div class="cta-card">
       <h2 class="cta-title">Begin Your Journey to Calm</h2>
       <p class="cta-subtitle">Join thousands of others who have found peace of mind with Calmpanion.</p>
-      <a href="www.calmpanion.org" class="btn btn-white">Try Calmpanion Free</a>
+      <a href="#" class="btn btn-white" onclick="launchStreamlit()">Try Calmpanion Free</a>
     </div>
   </section>
 
@@ -908,5 +908,21 @@ html, body {
     });
     
     function updateSlider() {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function launchStreamlit() {
+    fetch('/run-streamlit', {method:'POST'})
+        .then(response => response.text())
+        .then(url => {
+            window.open(url, '_blank');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to launch Streamlit app. Please try again.');
+        });
+    }
+</script>

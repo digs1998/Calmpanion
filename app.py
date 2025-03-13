@@ -7,11 +7,7 @@ import boto3
 import os
 import json
 import hashlib
-
-import streamlit as st
-import os
-
-
+import streamlit.components.v1 as components
 
 
 s3_client = boto3.client('s3', 
@@ -133,16 +129,15 @@ st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
 
 def main():
     # Define the path to the HTML file
-    # html_file_path = "index.html"
+    html_file_path = "index.html"
 
-    # # Read the HTML content from the file
-    # with open(html_file_path, "r") as file:
-    #     html_content = file.read()
+    # Read the HTML content from the file
+    with open(html_file_path, "r") as file:
+        html_content = file.read()
 
-    # # Display the HTML content in the Streamlit app
-    # st.components.v1.html(html_content, width=700, height=600)
+    # Display the HTML content in the Streamlit app
+    st.components.v1.html(html_content)
     initialize_session_state()
-    st.title("Welcome to Calmpanion")
     # Initialize session state for tracking the current view
     if "authenticated" not in st.session_state:
         st.session_state["authenticated"] = False
