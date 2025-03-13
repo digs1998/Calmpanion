@@ -128,17 +128,45 @@ def authenticate(username: str, password: str) -> bool:
 st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
 
 def main():
-    # Display the HTML content in the Streamlit app
+    # Change background color to greyish blue
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-color: #B0C4DE; /* Greyish blue */
+        }
+        header[data-testid="stHeader"] {
+            background-color: #B0C4DE; /* Greyish blue */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     initialize_session_state()
-    # Initialize session state for tracking the current view
+
+    # Initialize session state for authentication
     if "authenticated" not in st.session_state:
         st.session_state["authenticated"] = False
     if "username" not in st.session_state:
         st.session_state["username"] = None
-    
-    if not st.session_state["authenticated"]:
-        st.write("### Login / Sign Up (Optional)")
 
+    if not st.session_state["authenticated"]:
+        # Show full page HTML when not authenticated
+        with open("index.html", "r", encoding="utf-8") as file:
+            html_content = file.read()
+            st.markdown(
+                """
+                <style>
+                    section.main > div {max-width:100%;padding:0;margin:0}
+                    [data-testid="stSidebar"] {display: none}
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
+            components.html(html_content, height=800, width=None)
+
+        st.write("### Login / Sign Up (Optional)")
         col1, col2 = st.columns(2)
 
         # Login Section
@@ -147,7 +175,7 @@ def main():
             login_username = st.text_input("Username", key="login_username")
             login_password = st.text_input("Password", type="password", key="login_password")
 
-            if st.button("Login"):
+            if st.button("Login", key="login_button"):
                 if authenticate(login_username, login_password):
                     st.session_state["authenticated"] = True
                     st.session_state["username"] = login_username
@@ -162,7 +190,7 @@ def main():
             signup_username = st.text_input("Choose Username", key="signup_username")
             signup_password = st.text_input("Choose Password", type="password", key="signup_password")
 
-            if st.button("Sign Up"):
+            if st.button("Sign Up", key="signup_button"):
                 if signup_username and signup_password:
                     if save_user(signup_username, signup_password):
                         st.success("Signup successful! Please login.")
@@ -172,14 +200,14 @@ def main():
                     st.error("Please provide both username and password")
 
         # Skip login option
-        if st.button("Continue as Guest"):
+        if st.button("Continue as Guest", key="guest_button"):
             st.session_state["authenticated"] = True
             st.session_state["username"] = "Guest"
             st.success("Continuing without login...")
             st.rerun()
 
-        # Keep sidebar EMPTY when showing login/signup
         st.sidebar.empty()
+
     else:
         # Main content
         col1, col2 = st.columns([3, 1])
@@ -188,7 +216,7 @@ def main():
             st.write(f"Welcome, to Calmpanion! 👋")
 
         with col2:
-            if st.button("Logout"):
+            if st.button("Logout", key="logout_button"):
                 st.session_state.clear()
                 st.rerun()
 
