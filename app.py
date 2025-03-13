@@ -128,15 +128,7 @@ def authenticate(username: str, password: str) -> bool:
 st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
 
 def main():
-    # Define the path to the HTML file
-    html_file_path = "index.html"
-
-    # Read the HTML content from the file
-    with open(html_file_path, "r") as file:
-        html_content = file.read()
-
     # Display the HTML content in the Streamlit app
-    st.components.v1.html(html_content)
     initialize_session_state()
     # Initialize session state for tracking the current view
     if "authenticated" not in st.session_state:
