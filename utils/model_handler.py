@@ -3,6 +3,9 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain_groq import ChatGroq
 import os
 from typing import List, Union
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class ModelHandler:
     def __init__(self):

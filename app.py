@@ -8,7 +8,9 @@ import os
 import json
 import hashlib
 import streamlit.components.v1 as components
+from dotenv import load_dotenv
 
+load_dotenv()
 
 s3_client = boto3.client('s3', 
                             aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), 
