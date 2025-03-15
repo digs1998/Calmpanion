@@ -213,8 +213,7 @@ def main():
         col1, col2 = st.columns([3, 1])
 
         with col1:
-            st.write(f"Welcome, to Calmpanion! 👋")
-
+            st.markdown(f"<h2 style='font-size: 20px; font-weight: bold;'>Welcome, to Calmpanion! 👋</h2>", unsafe_allow_html=True)
         with col2:
             if st.button("Logout", key="logout_button"):
                 st.session_state.clear()

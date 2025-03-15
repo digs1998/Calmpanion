@@ -3,9 +3,6 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain_groq import ChatGroq
 import os
 from typing import List, Union
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class ModelHandler:
     def __init__(self):
@@ -25,7 +22,7 @@ class ModelHandler:
         llm = ChatGroq(
             model="llama3-70b-8192",
             groq_api_key=os.getenv("GROQ_API_KEY"),
-            temperature=0.0,
+            temperature=0.7,
             max_retries=2
         )
         return llm
