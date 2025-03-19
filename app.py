@@ -225,7 +225,7 @@ def main():
         if st.button("Login", key="guest_button"):
             st.session_state["authenticated"] = True
             st.session_state["username"] = "Guest"
-            st.success("Continuing without login...")
+            st.success("Welcome ...")
             st.rerun()
 
         st.sidebar.empty()
