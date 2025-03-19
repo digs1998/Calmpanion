@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 s3_client = boto3.client('s3', 
-                            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"), 
-                            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-                            region_name=os.getenv("AWS_REGION"),
+                            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), 
+                            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+                            region_name=os.environ.get("AWS_REGION"),
                             verify=True,
                             use_ssl = True,
                             config=boto3.session.Config(
@@ -23,7 +23,7 @@ s3_client = boto3.client('s3',
                                 retries={'max_attempts': 3}
                             ))
 
-S3_BUCKET = os.getenv("S3_BUCKET_NAME")
+S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
 S3_USERS_KEY='users/credentials.json'
 
 def initialize_session_state():
