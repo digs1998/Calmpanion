@@ -11,7 +11,6 @@ import streamlit.components.v1 as components
 from dotenv import load_dotenv
 
 load_dotenv()
-
 s3_client = boto3.client('s3', 
                             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), 
                             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
@@ -35,6 +34,9 @@ def initialize_session_state():
 
 def display_chat_history():
     """Display chat history"""
+    for message in st.session_state.conversation_history:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
@@ -127,9 +129,16 @@ def authenticate(username: str, password: str) -> bool:
     hashed_password = hash_password(password)
     return username in users and users[username] == hashed_password
 
-st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
+def get_conversation_context():
+    """Combine all messages in session state to form conversation context"""
+    if len(st.session_state.conversation_history) > 0:
+        context = "\n".join([f"{message['role']}: {message['content']}" for message in st.session_state.conversation_history])
+    else:
+        return None
+    return context
 
 def main():
+    st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
     # Change background color to greyish blue
     st.markdown(
         """
@@ -158,51 +167,62 @@ def main():
         with open("index.html", "r", encoding="utf-8") as file:
             html_content = file.read()
             st.markdown(
-                """
-                <style>
-                    section.main > div {max-width:100%;padding:0;margin:0}
-                    [data-testid="stSidebar"] {display: none}
-                </style>
-                """,
-                unsafe_allow_html=True
-            )
-            components.html(html_content, height=800, width=None)
+                        """
+                        <style>
+                            /* Make main content full-width on mobile */
+                            section.main > div { max-width: 100%; padding: 0; margin: 0; }
 
-        st.write("### Login / Sign Up (Optional)")
-        col1, col2 = st.columns(2)
+                            /* Hide sidebar for small screens */
+                            @media screen and (max-width: 768px) {
+                                [data-testid="stSidebar"] { display: none; }
+                                .stChatInput { width: 100% !important; }
+                            }
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
-        # Login Section
-        with col1:
-            st.subheader("Login")
-            login_username = st.text_input("Username", key="login_username")
-            login_password = st.text_input("Password", type="password", key="login_password")
+            components.html(
+                    html_content,
+                    height=800,
+                    width=None  # ✅ Keep None to allow auto-scaling
+                )
 
-            if st.button("Login", key="login_button"):
-                if authenticate(login_username, login_password):
-                    st.session_state["authenticated"] = True
-                    st.session_state["username"] = login_username
-                    st.success("Logged in successfully!")
-                    st.rerun()
-                else:
-                    st.error("Invalid username or password")
+        # st.write("### Login / Sign Up (Optional)")
+        # col1, col2 = st.columns(2)
 
-        # Signup Section
-        with col2:
-            st.subheader("Sign Up")
-            signup_username = st.text_input("Choose Username", key="signup_username")
-            signup_password = st.text_input("Choose Password", type="password", key="signup_password")
+        # # Login Section
+        # with col1:
+        #     st.subheader("Login")
+        #     login_username = st.text_input("Username", key="login_username")
+        #     login_password = st.text_input("Password", type="password", key="login_password")
 
-            if st.button("Sign Up", key="signup_button"):
-                if signup_username and signup_password:
-                    if save_user(signup_username, signup_password):
-                        st.success("Signup successful! Please login.")
-                    else:
-                        st.error("Username already exists!")
-                else:
-                    st.error("Please provide both username and password")
+        #     if st.button("Login", key="login_button"):
+        #         if authenticate(login_username, login_password):
+        #             st.session_state["authenticated"] = True
+        #             st.session_state["username"] = login_username
+        #             st.success("Logged in successfully!")
+        #             st.rerun()
+        #         else:
+        #             st.error("Invalid username or password")
+
+        # # Signup Section
+        # with col2:
+        #     st.subheader("Sign Up")
+        #     signup_username = st.text_input("Choose Username", key="signup_username")
+        #     signup_password = st.text_input("Choose Password", type="password", key="signup_password")
+
+            # if st.button("Sign Up", key="signup_button"):
+            #     if signup_username and signup_password:
+            #         if save_user(signup_username, signup_password):
+            #             st.success("Signup successful! Please login.")
+            #         else:
+            #             st.error("Username already exists!")
+            #     else:
+            #         st.error("Please provide both username and password")
 
         # Skip login option
-        if st.button("Continue as Guest", key="guest_button"):
+        if st.button("Login", key="guest_button"):
             st.session_state["authenticated"] = True
             st.session_state["username"] = "Guest"
             st.success("Continuing without login...")
@@ -244,32 +264,30 @@ def main():
             list(prompt_templates.get_templates().keys()),
             key="template"
         )
+        if "messages" not in st.session_state:
+            st.session_state.messages = [{"role": "assistant", "content": "Hi there, how can I help you today?"}]
+        
+        # Initialize conversation context
+        if 'conversation_history' not in st.session_state:
+            st.session_state.conversation_history = []
 
         qa_chain = None  # Define outside to avoid scope issues
         selected_model = None  # Define outside to avoid scope issues
 
         if selected_template == "Stress and Mental Wellbeing Support":
-            # model_type = st.sidebar.selectbox(
-            #     "Choose a Model for QA Chain:",
-            #     ("Mistral", "Llama"),
-            #     key="qa_model"  # Unique key
-            # )
             model_type = "Llama"
             # Initialize the chosen model in the QA chain
             qa_chain = setup_qachain(db, model_type=model_type)
         else:
-            # 🔹 **Model Selection (Only when NOT Stress Management)**
-            # selected_model = st.sidebar.selectbox(
-            #     "Choose Model",
-            #     ["Mistral", "Llama"],
-            #     key="model"
-            # )
             selected_model = "Mistral"
         user_input = None
+        
+        # Display or clear chat messages
+        display_chat_history()
         # 🔹 **Text Input Handling**
         if input_method == "Text":
             user_input = st.chat_input("Type your message here...")
-        
+    
         # 🔹 **Speech Input Handling**
         elif input_method == "Speech":
             st.subheader("🎤 Speak Now")
@@ -283,22 +301,29 @@ def main():
                     user_input = audio_handler.transcribe(audio_bytes)
                     st.write(f"🗣 You said: {user_input}")
 
-        # Process user input (from text or speech)
+
         if user_input:
-            st.session_state.messages.append({"role": "user", "content": user_input})
+            # Add the user input message to history
+            st.session_state.conversation_history.append({"role": "user", "content": user_input})
+
+            # Retrieve conversation context
+            context = get_conversation_context()
+
+            # Display the user message immediately
             with st.chat_message("user"):
                 st.markdown(user_input)
 
-            # 🔹 **Use RAG if Stress Support is Selected**
-            context = None  # Default to None
+            # Use RAG if Stress Support is Selected
             if selected_template == "Stress and Mental Wellbeing Support" and qa_chain:
+                # Retrieve docs using the QA chain
                 retrieved_docs = qa_chain.run(user_input)
-                context = "\n".join(retrieved_docs)  # Convert retrieved chunks to text
+                retrieved_context = "\n".join(retrieved_docs)  # Convert retrieved chunks to text
+                context = f"{get_conversation_context()}\n{retrieved_context}"  # Combine with conversation history
                 model_to_use = model_type  # Use QA model
             else:
                 model_to_use = selected_model  # Use standard model selection
 
-            # 🔹 **Generate Response**
+            # Generate the assistant response
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
                     response = model_handler.generate_response(
@@ -307,8 +332,10 @@ def main():
                         system_prompt=system_prompt,
                         **({"context": context} if context else {})  # Include context only if it's not None
                     )
+
+                    # Add the assistant response to history
                     st.session_state.messages.append({"role": "assistant", "content": response})
                     st.markdown(response)
-
+                    
 if __name__ == "__main__":
     main()
