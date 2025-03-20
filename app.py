@@ -137,19 +137,6 @@ def get_conversation_context():
     else:
         return None
     return context
-
-def save_feedback(feedback):
-    """Append feedback to a JSON file without displaying it on the front end."""
-    try:
-        with open(FEEDBACK_FILE, "r") as file:
-            feedback_data = json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        feedback_data = []
-
-    feedback_data.append(feedback)
-
-    with open(FEEDBACK_FILE, "w") as file:
-        json.dump(feedback_data, file)
     
 def main():
     st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
@@ -253,11 +240,10 @@ def main():
             st.markdown(f"<h2 style='font-size: 20px; font-weight: bold;'>Welcome, to Calmpanion! 👋</h2>", unsafe_allow_html=True)
         with col2:
             if st.button("Logout", key="logout_button"):
-                feedback = st.text_area("Before you go, any feedback?")
-                if st.button("Submit Feedback", key="submit_feedback"):
-                    save_feedback(feedback)
-                    st.session_state.clear()
-                    st.rerun()
+                st.session_state.clear()
+                st.session_state["authenticated"] = False  # Ensure login page is shown
+                st.session_state["username"] = None  # Clear username
+                st.rerun()
 
         # Initialize handlers
         audio_handler = AudioHandler()
