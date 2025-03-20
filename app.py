@@ -22,6 +22,7 @@ s3_client = boto3.client('s3',
                                 retries={'max_attempts': 3}
                             ))
 
+FEEDBACK_FILE = '/home/ubuntu/feedbacks.json'
 S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
 S3_USERS_KEY='users/credentials.json'
 
@@ -137,6 +138,19 @@ def get_conversation_context():
         return None
     return context
 
+def save_feedback(feedback):
+    """Append feedback to a JSON file without displaying it on the front end."""
+    try:
+        with open(FEEDBACK_FILE, "r") as file:
+            feedback_data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        feedback_data = []
+
+    feedback_data.append(feedback)
+
+    with open(FEEDBACK_FILE, "w") as file:
+        json.dump(feedback_data, file)
+    
 def main():
     st.set_page_config(page_title="Calmpanion", page_icon="😌", layout="wide")
     # Change background color to greyish blue
@@ -222,7 +236,7 @@ def main():
         #             st.error("Please provide both username and password")
 
         # Skip login option
-        if st.sidebar.button("Login", key="guest_button"):
+        if st.sidebar.button("Chat with Calmpanion!", key="guest_button"):
             st.session_state["authenticated"] = True
             st.session_state["username"] = "Guest"
             st.sidebar.success("Welcome ...")
@@ -239,8 +253,11 @@ def main():
             st.markdown(f"<h2 style='font-size: 20px; font-weight: bold;'>Welcome, to Calmpanion! 👋</h2>", unsafe_allow_html=True)
         with col2:
             if st.button("Logout", key="logout_button"):
-                st.session_state.clear()
-                st.rerun()
+                feedback = st.text_area("Before you go, any feedback?")
+                if st.button("Submit Feedback", key="submit_feedback"):
+                    save_feedback(feedback)
+                    st.session_state.clear()
+                    st.rerun()
 
         # Initialize handlers
         audio_handler = AudioHandler()
