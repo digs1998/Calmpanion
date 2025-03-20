@@ -741,7 +741,7 @@ html, body {
       <h1 class="hero-title">Find Peace in Every Conversation</h1>
       <p class="hero-subtitle">Calmpanion is your AI companion designed to help you manage stress, find clarity, and create moments of calm throughout your day.</p>
       <div class="hero-cta">
-        <a href="#" class="btn btn-white" onclick="launchStreamlit()">Try Now By Signing up below!</a>
+        <p style="font-weight: bold;">Look left to feel right!</p>
       </div>
     </div>
     <div class="hero-image">
@@ -853,7 +853,7 @@ html, body {
     <div class="cta-card">
       <h2 class="cta-title">Begin Your Journey to Calm</h2>
       <p class="cta-subtitle">Join thousands of others who have found peace of mind with Calmpanion.</p>
-      <a href="#" class="btn btn-white" onclick="launchStreamlit()">Sign up below!</a>
+      <p style="font-weight: bold;">Look left to feel right!</p>
     </div>
   </section>
 
@@ -929,17 +929,5 @@ html, body {
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentIndex);
       });
-    }
-
-    function launchStreamlit() {
-    fetch('/run-streamlit', {method:'POST'})
-        .then(response => response.text())
-        .then(url => {
-            window.open(url, '_blank');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to launch Streamlit app. Please try again.');
-        });
     }
 </script>

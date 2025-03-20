@@ -206,29 +206,30 @@ def main():
         #         else:
         #             st.error("Invalid username or password")
 
-        # # Signup Section
+        # Signup Section
         # with col2:
-        #     st.subheader("Sign Up")
+        #     st.sidebar.subheader("Sign Up")
         #     signup_username = st.text_input("Choose Username", key="signup_username")
         #     signup_password = st.text_input("Choose Password", type="password", key="signup_password")
 
-            # if st.button("Sign Up", key="signup_button"):
-            #     if signup_username and signup_password:
-            #         if save_user(signup_username, signup_password):
-            #             st.success("Signup successful! Please login.")
-            #         else:
-            #             st.error("Username already exists!")
-            #     else:
-            #         st.error("Please provide both username and password")
+        #     if st.sidebar.button("Sign Up", key="signup_button"):
+        #         if signup_username and signup_password:
+        #             if save_user(signup_username, signup_password):
+        #                 st.success("Signup successful! Please login.")
+        #             else:
+        #                 st.error("Username already exists!")
+        #         else:
+        #             st.error("Please provide both username and password")
 
         # Skip login option
-        if st.button("Login", key="guest_button"):
+        if st.sidebar.button("Login", key="guest_button"):
             st.session_state["authenticated"] = True
             st.session_state["username"] = "Guest"
-            st.success("Welcome ...")
+            st.sidebar.success("Welcome ...")
             st.rerun()
 
-        st.sidebar.empty()
+        # Empty main area
+        st.empty()
 
     else:
         # Main content
