@@ -298,7 +298,7 @@ def main():
         # Use a form to handle feedback submission and clearing
         with st.sidebar.form(key="feedback_form", clear_on_submit=True):
             feedback_input = st.text_area(
-                "What do you think about CalmPanion?",
+                "What do you think about Calmpanion?",
                 height=100,
                 key="feedback_input"
             )
