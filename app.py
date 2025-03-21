@@ -9,6 +9,8 @@ import json
 import hashlib
 import streamlit.components.v1 as components
 from dotenv import load_dotenv
+import sqlite3
+from datetime import datetime
 
 load_dotenv()
 s3_client = boto3.client('s3', 
@@ -25,6 +27,25 @@ s3_client = boto3.client('s3',
 FEEDBACK_FILE = '/home/ubuntu/feedbacks.json'
 S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
 S3_USERS_KEY='users/credentials.json'
+
+
+def init_db():
+    conn = sqlite3.connect('feedback.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS feedback 
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  feedback TEXT, 
+                  timestamp TEXT)''')
+    conn.commit()
+    conn.close()
+
+def save_feedback(feedback_text):
+    conn = sqlite3.connect('feedback.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO feedback (feedback, timestamp) VALUES (?, ?)",
+              (feedback_text, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    conn.commit()
+    conn.close()
 
 def initialize_session_state():
     """Initialize session state variables"""
@@ -253,6 +274,8 @@ def main():
 
         # 🔹 **Initialize RAG database**
         db = setup_database()  # Load ChromaDB
+        
+        init_db() # Initializ
 
         # Input method selection
         input_method = st.sidebar.radio(
@@ -268,6 +291,27 @@ def main():
             list(prompt_templates.get_templates().keys()),
             key="template"
         )
+
+       # 🔹 **Feedback Section**
+        st.sidebar.subheader("Share Your Thoughts")
+        
+        # Use a form to handle feedback submission and clearing
+        with st.sidebar.form(key="feedback_form", clear_on_submit=True):
+            feedback_input = st.text_area(
+                "What do you think about CalmPanion?",
+                height=100,
+                key="feedback_input"
+            )
+            submit_button = st.form_submit_button("Submit Feedback")
+
+        # Handle form submission
+        if submit_button:
+            if feedback_input.strip():
+                save_feedback(feedback_input)
+                st.sidebar.success("Thanks for your feedback!")
+            else:
+                st.sidebar.warning("Please enter some feedback before submitting.")
+
         if "messages" not in st.session_state:
             st.session_state.messages = [{"role": "assistant", "content": "Hi there, how can I help you today?"}]
         

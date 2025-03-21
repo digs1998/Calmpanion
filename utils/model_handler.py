@@ -11,11 +11,12 @@ class ModelHandler:
     def __init__(self):
         self.mistral_api = None
         
+        
     def initialize_mistral(self):
         """Initialize Mistral model via HuggingFace API"""
         mistral_api = ChatGroq(
             model="mixtral-8x7b-32768",
-            api_key=os.environ.get("GROQ_API_KEY"),
+            api_key=os.environ.get("GROQ_API_KEY"), 
             temperature=0.0,
             max_retries=2
         )
