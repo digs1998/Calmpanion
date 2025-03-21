@@ -207,7 +207,8 @@ def main():
             components.html(
                     html_content,
                     height=800,
-                    width=None  # ✅ Keep None to allow auto-scaling
+                    width=None, # ✅ Keep None to allow auto-scaling
+                    scrolling=True
                 )
 
         # st.write("### Login / Sign Up (Optional)")
