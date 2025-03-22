@@ -24,7 +24,6 @@ s3_client = boto3.client('s3',
                                 retries={'max_attempts': 3}
                             ))
 
-FEEDBACK_FILE = '/home/ubuntu/feedbacks.json'
 S3_BUCKET = os.environ.get("S3_BUCKET_NAME")
 S3_USERS_KEY='users/credentials.json'
 
