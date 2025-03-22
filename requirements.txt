@@ -11,3 +11,5 @@ pypdf
 boto3
 torch
 sentence-transformers
+flask
+gunicorn
