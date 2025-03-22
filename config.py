@@ -1,8 +1,8 @@
 import os
 
 # Port configuration
-STREAMLIT_PORT = 8000  # Backend port
-FLASK_PORT = 5000      # Frontend port
+STREAMLIT_PORT = 5000  # Backend port
+FLASK_PORT = 8000      # Frontend port
 
 # Secret key for Flask app
 SECRET_KEY = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcbf'

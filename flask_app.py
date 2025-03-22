@@ -18,7 +18,7 @@ app.secret_key = os.environ.get("SESSION_SECRET", SECRET_KEY)
 streamlit_process = None
 
 def start_streamlit():
-    """Start the Streamlit app as a subprocess"""
+    """Start the Streamlit app inside a tmux session"""
     global streamlit_process
     try:
         # Check if streamlit is already running
@@ -27,11 +27,11 @@ def start_streamlit():
             return
         
         streamlit_cmd = "/home/ubuntu/Calmpanion/venv/bin/streamlit"
-        # Start Streamlit on a different port
-        cmd = [streamlit_cmd, "run", "streamlit_wrapper.py", "--server.fileWatcherType", "none"]
+        # Start Streamlit inside tmux
+        cmd = ["tmux", "new-session", "-d", f"{streamlit_cmd} run streamlit_wrapper.py --server.fileWatcherType none"]
         
         logger.info(f"Starting Streamlit with command: {' '.join(cmd)}")
-        streamlit_process = subprocess.Popen(cmd)
+        streamlit_process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         logger.info(f"Streamlit process started with PID: {streamlit_process.pid}")
         
         # Give Streamlit time to start
@@ -56,7 +56,7 @@ def index():
 @app.route('/chat')
 def chat():
     """Redirect to the Streamlit chat interface"""
-    return render_template('streamlit.html', streamlit_url=f"http://0.0.0.0:5000")
+    return render_template('streamlit.html', streamlit_url=f"www.calmpanionstreamlit.info")
 
 @app.route('/health')
 def health_check():
@@ -103,7 +103,7 @@ def run_streamlit_route():
         start_streamlit()
     
     # Return the Streamlit URL 
-    return f"http://0.0.0.0:5000"
+    return f"www.calmpanionstreamlit.info"
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -134,3 +134,10 @@ def cleanup():
             except:
                 pass
         streamlit_process = None
+
+from flask_app import app
+import warnings
+warnings.filterwarnings("ignore")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000, debug=True)
