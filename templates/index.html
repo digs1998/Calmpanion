@@ -19,8 +19,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calmpanion - Your AI Companion for Stress Relief</title>    <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calmpanion - Your AI Companion for Stress Relief</title>
   <style>
     :root {
       --primary-blue: #5da9e9;
@@ -86,42 +84,46 @@
     
     .hero {
       display: flex;
+      flex-direction: column;
       align-items: center;
       padding: 5rem 5%;
-      min-height: 80vh;
+      min-height: auto;
       position: relative;
       overflow: hidden;
     }
     
     .hero-content {
-      width: 50%;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 2rem;
       z-index: 2;
     }
     
     .hero-title {
-      font-size: 3.5rem;
+      font-size: 2.5rem;
       line-height: 1.2;
       margin-bottom: 1.5rem;
       color: var(--text-dark);
     }
     
     .hero-subtitle {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-light);
       margin-bottom: 2.5rem;
     }
     .hero-cta {
     display: flex;
-    justify-content: center;  /* Centers buttons horizontally */
-    align-items: center;      /* Aligns buttons vertically */
-    gap: 1rem;                /* Ensures equal spacing */
-    margin-top: 1.5rem;        /* Adds space above buttons */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping for mobile view */
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
   .btn {
       display: flex;
-      justify-content: center;   /* Centers text inside button */
-      align-items: center;       /* Centers vertically */
+      justify-content: center;
+      align-items: center;
       padding: 0.8rem 2rem;
       border-radius: 30px;
       font-weight: 600;
@@ -129,11 +131,10 @@
       transition: all 0.3s ease;
       cursor: pointer;
       font-size: 1rem;
-      min-width: 150px;          /* Ensures both buttons have the same width */
+      min-width: 150px;
       text-align: center;
   }
 
-  /* Primary Button */
   .btn-primary {
       background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
       color: white;
@@ -164,12 +165,11 @@
       transform: rotate(30deg) translate(10%, 10%);
   }
 
-  /* Secondary Button */
   .btn-secondary {
       background: transparent;
       color: var(--primary-blue);
       border: 2px solid var(--primary-blue);
-      min-width: 150px;         /* Ensures both buttons are equal width */
+      min-width: 150px;
       text-align: center;
   }
 
@@ -178,7 +178,7 @@
   }
 
     .hero-image {
-      width: 50%;
+      width: 100%;
       position: relative;
       z-index: 1;
     }
@@ -191,6 +191,7 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
       padding: 2rem;
       margin-left: auto;
+      margin-right: auto;
       overflow: hidden;
       position: relative;
     }
