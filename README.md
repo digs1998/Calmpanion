@@ -1,7 +1,7 @@
 
 # Calmpanion
 
-An interactive AI Mental Health support chatbot application powered by multiple language models with support for both text and speech input. Try it out here: www.calmpanion.org
+An interactive AI Mental Health support chatbot application powered by multiple language models with support for both text and speech input.
 
 ## Features
 
