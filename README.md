@@ -15,9 +15,6 @@ An interactive AI Mental Health support chatbot application powered by multiple 
 ## Prerequisites
 
 - A Github, and Streamlit Account
-- API keys for:
-  - Groq
-
 ## Setup Instructions
 
 1. **Run the Application**:
@@ -61,20 +58,14 @@ If you want to run this project locally:
    ```
    pip install -r requirements.txt
    ```
-3. To instantiate Groq environment, go to Groq website, and create an API key. Once you have an access token, run in command line
+3. Set environment variables for your API keys
 
-   ```
-   export GROQ_API_KEY = "your-groq-api-key"
-
-   ```
-4. Set environment variables for your API keys
-
-5. To Run the Landing page 
+4. To Run the Landing page 
    ```
    python -m http.server 8000
    
    ```
-6. Open a new terminal to run Streamlit
+5. Open a new terminal to run Streamlit
    ```
    cd Calmpanion
    conda acitivate <my_env>
@@ -82,7 +73,7 @@ If you want to run this project locally:
    ```
 
 
-7. Run the Streamlit app:
+6. Run the Streamlit app:
    ```
    streamlit run app.py
    
